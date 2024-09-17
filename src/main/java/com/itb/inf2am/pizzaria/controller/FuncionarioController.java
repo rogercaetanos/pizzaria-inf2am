@@ -3,15 +3,17 @@ package com.itb.inf2am.pizzaria.controller;
 
 // @Controller      -> Exclusivo para sistemas web
 // @RestController  -> Exclusivo para APIS
+// @GetMapping:  Complemento da url principal, exclusivo para consultas
+// @PostMapping: Complemento da url principal, exclusivo para cadastro (INSERT)
 
 
 import com.itb.inf2am.pizzaria.model.Categoria;
 import com.itb.inf2am.pizzaria.services.CategoriaService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,11 +26,20 @@ public class FuncionarioController {
         this.categoriaService = categoriaService;
     }
 
-    @GetMapping("/categoria")    // @GetMapping: Complemento da url principal, exclusivo para consultas
+    @GetMapping("/categoria")
     public ResponseEntity<List<Categoria>> listarTodasCategorias() {
-
 
         return ResponseEntity.ok().body(categoriaService.listarTodasCategorias());
     }
+
+
+    @PostMapping("/categoria")
+    public ResponseEntity<Categoria> salvarCategoria(@RequestBody Categoria categoria) {
+
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/funcionario/categoria").toUriString());
+
+        return ResponseEntity.created(uri).body(categoriaService.salvarCategoria(categoria));
+    }
+
 
 }
