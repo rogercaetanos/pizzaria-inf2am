@@ -55,7 +55,7 @@ public class AppExceptionHandler  extends ResponseEntityExceptionHandler {
     // Tratamento do error: 404
 
     @ExceptionHandler(value = {NotFound.class})
-    public ResponseEntity<Object> notFoundException(BadRequest ex, WebRequest request) {
+    public ResponseEntity<Object> notFoundException(NotFound ex, WebRequest request) {
         LocalDateTime localDateTimeBrasil = LocalDateTime.now(zoneBrasil);
         String errorMessageDescription = ex.getLocalizedMessage(); // Mensagem original do erro
 

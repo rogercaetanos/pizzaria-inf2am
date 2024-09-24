@@ -3,10 +3,14 @@ package com.itb.inf2am.pizzaria.controller;
 
 // @Controller      -> Exclusivo para sistemas web
 // @RestController  -> Exclusivo para APIS
-// @GetMapping:  Complemento da url principal, exclusivo para consultas
-// @PostMapping: Complemento da url principal, exclusivo para cadastro (INSERT)
+// @RequestMapping  -> Representa a url principal, o endereço do controlador
+// @GetMapping:     -> Complemento da url principal, exclusivo para consultas
+// @PostMapping:    -> Complemento da url principal, exclusivo para cadastro (INSERT)
+// @PutMapping:     -> Complemento da url principal, exclusivo para Atualizar (UPDATE)
+// @PathVariable:   -> Indica os parâmetros passados através da url,ou seja, varáveis (tipos primitivos de dados e tbm String)
 
 
+import com.itb.inf2am.pizzaria.exceptions.BadRequest;
 import com.itb.inf2am.pizzaria.model.Categoria;
 import com.itb.inf2am.pizzaria.services.CategoriaService;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +37,16 @@ public class FuncionarioController {
     }
 
 
+    @GetMapping("/categoria/{id}")
+    public ResponseEntity<Categoria> listarCategoriaPorId(@PathVariable(value = "id") String id){
+        try {
+            return ResponseEntity.ok().body(categoriaService.listarCategoriaPorId(Integer.parseInt(id)));
+        }catch(NumberFormatException ex) {
+            throw new BadRequest("'" + id + "' não é um número inteiro válido. Por favor, forneça um valor inteiro, como 15. ");
+        }
+
+    }
+
     @PostMapping("/categoria")
     public ResponseEntity<Categoria> salvarCategoria(@RequestBody Categoria categoria) {
 
@@ -41,5 +55,28 @@ public class FuncionarioController {
         return ResponseEntity.created(uri).body(categoriaService.salvarCategoria(categoria));
     }
 
+    @PutMapping("/categoria/{id}")
+    public ResponseEntity<Categoria> atualizarCategoria(@RequestBody Categoria categoria, @PathVariable(value = "id") String id) {
+    try{
+        return ResponseEntity.ok().body(categoriaService.atualizarCategoria(categoria, Integer.parseInt(id)));
+
+    }catch (NumberFormatException ex) {
+        throw new BadRequest("'" + id + "' não é um número inteiro válido. Por favor, forneça um valor inteiro, como 15. ");
+    }
+
+    }
+
+    // Object : Pode representar "qualquer" tipo de objeto : categoria, produto, String, etc...
+    @DeleteMapping("/categoria/{id}")
+    public ResponseEntity<Object> deletarCategoria(@PathVariable(value = "id") String id) {
+        try{
+            if(categoriaService.deletarCategoria(Integer.parseInt(id))) {
+                return ResponseEntity.ok().body("Categoria com o id " + id + " excluída com sucesso");
+            }
+        }catch (NumberFormatException ex) {
+            throw new BadRequest("'" + id + "' não é um número inteiro válido. Por favor, forneça um valor inteiro, como 15. ");
+        }
+        return ResponseEntity.ok().body("Não foi possível a exclusão da categoria com o id " + id);
+    }
 
 }

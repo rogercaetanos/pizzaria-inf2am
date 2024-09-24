@@ -1,5 +1,6 @@
 package com.itb.inf2am.pizzaria.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -43,8 +44,10 @@ public class Produto {
     // Atributos de apoio
 
     @Transient                             // NÃO REPRESENTA COLUNA DO BANCO
+    @JsonIgnore
     private String message = "";
     @Transient
+    @JsonIgnore
     private boolean isValid = true;
 
 

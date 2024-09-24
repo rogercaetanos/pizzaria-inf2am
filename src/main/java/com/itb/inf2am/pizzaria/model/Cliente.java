@@ -1,6 +1,7 @@
 package com.itb.inf2am.pizzaria.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -33,9 +34,11 @@ public class Cliente {
     // Atributos de apoio
 
     @Transient
+    @JsonIgnore
     private String message = "";
 
     @Transient
+    @JsonIgnore
     private boolean isValid = true;
 
     public Integer getId() {

@@ -1,6 +1,7 @@
 package com.itb.inf2am.pizzaria.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,9 +21,11 @@ public class Categoria {
     // Atributos de apoio
 
     @Transient   // Significa que o referido atributo NÃO É COLUNA
+    @JsonIgnore
     private String message = "";
 
     @Transient
+    @JsonIgnore
     private boolean isValid = true;
 
     public Integer getId() {
