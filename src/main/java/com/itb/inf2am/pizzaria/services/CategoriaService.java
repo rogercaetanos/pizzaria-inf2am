@@ -12,6 +12,8 @@ public interface CategoriaService {
     public List<Categoria> listarTodasCategorias();
     public Categoria listarCategoriaPorId(Integer id);
     public Categoria atualizarCategoria(Categoria categoria, Integer id);
-
+    public  List<Categoria> listarTodasCategoriasAtivas();
+    public Categoria listarCategoriaPorIdAtiva(Integer id);
+    public Categoria deletarCategoriaLogic(Integer id);
 
 }

@@ -33,14 +33,16 @@ public class FuncionarioController {
     @GetMapping("/categoria")
     public ResponseEntity<List<Categoria>> listarTodasCategorias() {
 
-        return ResponseEntity.ok().body(categoriaService.listarTodasCategorias());
+        //return ResponseEntity.ok().body(categoriaService.listarTodasCategorias());
+        return ResponseEntity.ok().body(categoriaService.listarTodasCategoriasAtivas());
     }
 
 
     @GetMapping("/categoria/{id}")
     public ResponseEntity<Categoria> listarCategoriaPorId(@PathVariable(value = "id") String id){
         try {
-            return ResponseEntity.ok().body(categoriaService.listarCategoriaPorId(Integer.parseInt(id)));
+           // return ResponseEntity.ok().body(categoriaService.listarCategoriaPorId(Integer.parseInt(id)));
+            return ResponseEntity.ok().body(categoriaService.listarCategoriaPorIdAtiva(Integer.parseInt(id)));
         }catch(NumberFormatException ex) {
             throw new BadRequest("'" + id + "' não é um número inteiro válido. Por favor, forneça um valor inteiro, como 15. ");
         }
@@ -77,6 +79,16 @@ public class FuncionarioController {
             throw new BadRequest("'" + id + "' não é um número inteiro válido. Por favor, forneça um valor inteiro, como 15. ");
         }
         return ResponseEntity.ok().body("Não foi possível a exclusão da categoria com o id " + id);
+    }
+
+    @PutMapping("/delete-logic/categoria/{id}")
+    public ResponseEntity<Categoria> deletarCategoriaLogic(@PathVariable(value = "id") String id) {
+        try{
+            return ResponseEntity.ok().body(categoriaService.deletarCategoriaLogic(Integer.parseInt(id)));
+        }catch (NumberFormatException ex) {
+            throw new BadRequest("'" + id + "' não é um número inteiro válido. Por favor, forneça um valor inteiro, como 15. ");
+        }
+
     }
 
 }

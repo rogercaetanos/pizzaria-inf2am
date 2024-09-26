@@ -17,6 +17,8 @@ public class Categoria {
     private String nome;
     @Column(nullable = false, length = 50)
     private String descricao;
+    @Column(nullable = false, length = 20)
+    private String statusCat;
 
     // Atributos de apoio
 
@@ -50,6 +52,14 @@ public class Categoria {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getStatusCat() {
+        return statusCat;
+    }
+
+    public void setStatusCat(String statusCat) {
+        this.statusCat = statusCat;
     }
 
     public String getMessage() {
